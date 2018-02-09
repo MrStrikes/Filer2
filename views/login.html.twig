@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}Filer Project -- Register{% endblock %}
+
+{% block content %}
+<form action="?action=login" method="POST">
+    <input type="text" placeholder="username" name="username"><br>
+    <input type="password" placeholder="password" name="psw"><br>
+    <button type="submit" name="submit">Login boi</button>
+</form>
+
+<a href="?action=home">Go back to homepage</a>
+{% endblock %}
