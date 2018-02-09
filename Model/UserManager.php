@@ -8,7 +8,8 @@ class UserManager
     {
         if(isset($user) && isset($firstName)
         && isset($lastName) && isset($email)
-        && isset($password) && isset($passwordVerify)){
+        && isset($password) && isset($passwordVerify)
+        && isset($_POST['submit'])){
             if($password === $passwordVerify){
                 $hashedPwd = hash(md5, $password);
                 $dbm = DBManager::getInstance();

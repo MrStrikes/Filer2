@@ -14,7 +14,8 @@ class MainController extends BaseController
     {
         if(isset($_POST['username']) && isset($_POST['firstName'])
         && isset($_POST['lastName']) && isset($_POST['email'])
-        && isset($_POST['password']) && isset($_POST['passwordVerify'])){
+        && isset($_POST['password']) && isset($_POST['passwordVerify'])
+        && isset($_POST['submit'])){
             $username = $_POST['username'];
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
