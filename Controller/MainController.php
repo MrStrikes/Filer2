@@ -16,15 +16,28 @@ class MainController extends BaseController
         && isset($_POST['lastName']) && isset($_POST['email'])
         && isset($_POST['password']) && isset($_POST['passwordVerify'])
         && isset($_POST['submit'])){
-            $username = $_POST['username'];
-            $firstName = $_POST['firstName'];
-            $lastName = $_POST['lastName'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $passwordVerify = $_POST['passwordVerify'];
+            $username = htmlentities($_POST['username']);
+            $firstName = htmlentities($_POST['firstName']);
+            $lastName = htmlentities($_POST['lastName']);
+            $email = htmlentities($_POST['email']);
+            $password = htmlentities($_POST['password']);
+            $passwordVerify = htmlentities($_POST['passwordVerify']);
             $manager = new UserManager();
-            $userDatas = $manager->registerUser($username, $firstName, $lastName, $email, $password, $passwordVerify);
+            $sendUserDatas = $manager->registerUser($username, $firstName, $lastName, $email, $password, $passwordVerify);
         }
         return $this->render('register.html.twig');
+    }
+
+    public function loginAction()
+    {
+        if(isset($_POST['username']) && isset($_POST['psw'])
+        && isset($_POST['submit']))
+        {
+            $username = htmlentities($_POST['username']);
+            $password = htmlentities($_POST['psw']);
+            $manager = new UserManager();
+            $getUserData = $manager->loginUser($username, $password);
+        }
+        return $this->render('login.html.twig');
     }
 }
