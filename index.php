@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once('config/config.php');
 require_once('Routing/Router.php');
 require_once('vendor/autoload.php');
