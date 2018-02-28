@@ -34,10 +34,14 @@ class MainController extends BaseController
         && isset($_POST['submit']))
         {
             $username = htmlentities($_POST['username']);
-            $password = htmlentities($_POST['psw']);
+            $password = $_POST['psw'];
             $manager = new UserManager();
             $getUserData = $manager->loginUser($username, $password);
+            $arr = [
+                'user' => $_SESSION['username']
+            ];
         }
+        var_dump($arr);
         return $this->render('login.html.twig');
     }
 }

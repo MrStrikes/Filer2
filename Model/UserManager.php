@@ -34,27 +34,24 @@ class UserManager
         if(isset($user) && isset($password)
         && isset($_POST['submit']))
         {
+            $errors = '';
             $hashedPwd = hash(md5, $password);
             $dbm = DBManager::getInstance();
             $pdo = $dbm->getPdo();
 
-            $stmt = $pdo->prepare("SELECT * FROM `Users`(`username`, `password`) 
-            VALUES (:username, :pwd)");
+            $stmt = $pdo->prepare("SELECT * FROM Users 
+            WHERE username = :username AND password = :pwd");
             $stmt->bindParam(':username', $user);
             $stmt->bindParam(':pwd', $hashedPwd);
 
             $stmt->execute();
-            $stmt->fetchAll();
-
-            if(empty($stmt))
-            {
-                var_dump('nope');
+            $result = $stmt->fetchAll();
+            if ($user === NULL){
+                $errors = 'Invalid username or password';
             } else {
-                session_start();
-                $_SESSION['id'] = $stmt['id'];
-                $_SESSION['username'] = $stmt['username'];
-                var_dump($_SESSION['id'], $_SESSION['username']);
+                $_SESSION['username'] = $user[':username'];
             }
+            return $result;
         }
     }
 }

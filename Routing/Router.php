@@ -15,7 +15,7 @@ class Router
             require_once('Controller/'.$controller_name.'.php');
             $controller = new $controller_name;
             $response = call_user_func([$controller, $method_name]);
-            
+
             return $response;
         }
         else
