@@ -31,7 +31,7 @@ class MainController extends BaseController
     public function loginAction()
     {
         if(isset($_POST['username']) && isset($_POST['psw'])
-        && isset($_POST['submit']))
+        && $_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $username = htmlentities($_POST['username']);
             $password = $_POST['psw'];
@@ -40,8 +40,14 @@ class MainController extends BaseController
             $arr = [
                 'user' => $_SESSION['username']
             ];
+            return $this->render('login.html.twig', $arr);
+        } else {
+            return $this->render('login.html.twig');
         }
-        var_dump($arr);
-        return $this->render('login.html.twig');
+    }
+
+    public function logoutAction(){
+        session_destroy();
+        $this->redirect('?action=home');
     }
 }

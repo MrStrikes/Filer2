@@ -8,8 +8,8 @@
     <input type="password" placeholder="password" name="psw"><br>
     <button type="submit" name="submit">Login boi</button>
 </form>
-
-<p>Hello {{ user }}</p>
-
+{% if user is defined %}
+<a href="?action=logout">Déconnexion</a><br>
+{% endif %}
 <a href="?action=home">Go back to homepage</a>
 {% endblock %}
