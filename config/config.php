@@ -3,9 +3,9 @@
 $config = [
     'homepage_route' => 'home',
     'db' => [
-        'name'     => 'Filer',
-        'user'     => 'Filer',
-        'password' => 'uMEUyBZDmXGJGTl9',
+        'name'     => 'filer2',
+        'user'     => 'root',
+        'password' => '',
         'host'     => '127.0.0.1',
         'port'     => NULL
     ],
@@ -13,6 +13,7 @@ $config = [
         'home'    => 'Main:home',
         'register' => 'Main:register',
         'login' => 'Main:login',
-        'logout' => 'Main:logout'
+        'logout' => 'Main:logout',
+        'upload' => 'Upload:upload'
     ]
 ];

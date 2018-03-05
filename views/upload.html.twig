@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}Filer Project -- upload{% endblock %}
+
+{% block content %}
+<form  method="POST" enctype="multipart/form-data" action="?action=upload">
+    <input type="file" placeholder="upload your file" name="user_file"><br>
+    <button type="submit" name="submit">upload file</button>
+</form>
+
+<a href="?action=home">Go back to homepage</a>
+{% endblock %}
