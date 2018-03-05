@@ -20,8 +20,8 @@ class MainController extends BaseController
             $firstName = htmlentities($_POST['firstName']);
             $lastName = htmlentities($_POST['lastName']);
             $email = htmlentities($_POST['email']);
-            $password = htmlentities($_POST['password']);
-            $passwordVerify = htmlentities($_POST['passwordVerify']);
+            $password = $_POST['password'];
+            $passwordVerify = $_POST['passwordVerify'];
             $manager = new UserManager();
             $sendUserDatas = $manager->registerUser($username, $firstName, $lastName, $email, $password, $passwordVerify);
         }
@@ -42,12 +42,15 @@ class MainController extends BaseController
             ];
             return $this->render('login.html.twig', $arr);
         } else {
-            return $this->render('login.html.twig');
+            $arr = [
+                'errors' => $errors
+            ];
+            return $this->render('login.html.twig', $arr);
         }
     }
 
     public function logoutAction(){
         session_destroy();
-        $this->redirect('?action=home');
+        return $this->redirect('?action=home');
     }
 }

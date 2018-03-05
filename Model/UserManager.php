@@ -38,12 +38,11 @@ class UserManager
 
         $stmt->execute();
         $result = $stmt->fetchAll();
-        if ($user === NULL){
+        if (count($result) < 1 || count($result) >1){
             $errors = 'Invalid username or password';
         } else {
             $_SESSION['username'] = $user;
-            var_dump($user);
         }
-        return $result;
+        return $user;
     }
 }
