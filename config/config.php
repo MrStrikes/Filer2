@@ -5,9 +5,9 @@ $config = [
     'db' => [
         'name'     => 'filer2',
         'user'     => 'root',
-        'password' => '',
+        'password' => 'root',
         'host'     => '127.0.0.1',
-        'port'     => NULL
+        'port'     => 3306
     ],
     'routes' => [
         'home'    => 'Main:home',

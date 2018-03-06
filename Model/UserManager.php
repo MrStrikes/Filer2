@@ -40,6 +40,7 @@ class UserManager
         $result = $stmt->fetchAll();
         if (count($result) < 1 || count($result) >1){
             $errors = 'Invalid username or password';
+            return $errors;
         } else {
             $_SESSION['username'] = $user;
         }

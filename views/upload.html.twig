@@ -8,5 +8,8 @@
     <button type="submit" name="submit">upload file</button>
 </form>
 
+{% for files in files %}
+<p>{{ files }}</p>
+{% endfor %}
 <a href="?action=home">Go back to homepage</a>
 {% endblock %}
