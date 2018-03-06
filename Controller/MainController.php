@@ -43,9 +43,9 @@ class MainController extends BaseController
             return $this->render('login.html.twig', $arr);
         } else {
             $arr = [
-                'errors' => $errors
+                'errors' => $getUserData
             ];
-            return $this->render('login.html.twig', $arr);
+            return $this->render('login.html.twig');
         }
     }
 

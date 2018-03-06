@@ -4,8 +4,6 @@ class FilesManager//in progress
 {
     public function uploadFile()
     {
-        /*if ($_FILES["user_file"]["error"] > 0)
-            echo "Return Code: " . $_FILES["user_file"]["error"] . "<br>";*/
         if (isset($_FILES['user_file']))
         {
             $uploaddir = 'upload/' . $_SESSION['username'];

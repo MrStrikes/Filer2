@@ -26,7 +26,6 @@ class UserManager
 
     public function loginUser($user, $password)
     {
-        $errors = '';
         $hashedPwd = hash(md5, $password);
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
@@ -43,7 +42,7 @@ class UserManager
             return $errors;
         } else {
             $_SESSION['username'] = $user;
+            return $user;
         }
-        return $user;
     }
 }
