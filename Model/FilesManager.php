@@ -1,6 +1,6 @@
 <?php
 
-class FilesManager//in progress
+class FilesManager
 {
     public function uploadFile()
     {
