@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="assets/style.css">
   </head>
   <body>
-    {% block content %}{% endblock %}
+  <header><h2 class="header"> Filer Project -- {% block header_title %} {% endblock %}</h2></header>
+
+  {% block content %}{% endblock %}
   </body>
 </html>
