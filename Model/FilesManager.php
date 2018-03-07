@@ -7,10 +7,12 @@ class FilesManager
         if (isset($_FILES['user_file']))
         {
             $uploaddir = 'upload/' . $_SESSION['username'];
-            if (file_exists("upload/" . $_FILES["user_file"]["name"]))
+            if (file_exists("upload/" . $_FILES["user_file"]["name"])){
                 echo $_FILES["user_file"]["name"] . " already exists. ";
-            else
-            {
+                $logs = fopen('logs/error.log', 'a+');
+                fwrite($logs, $_SESSION['username']." tried to upload a file but it already exists\n");
+                fclose($logs);
+            } else {
                 echo $_FILES["user_file"]["name"] . " has been uploaded. <br>";
                 if (!file_exists($uploaddir)) {
                     mkdir($uploaddir, 0777, true);
@@ -18,11 +20,13 @@ class FilesManager
                         $uploaddir."/". $_FILES["user_file"]["name"]);
                         $logs = fopen('logs/access.log', 'a+');
                         fwrite($logs, 'A new directory has been created by '.$_SESSION['username'].' and he uploaded a file named '.$_FILES['user_file']['name']."\n");
+                        fclose($logs);
                 } else {
                     move_uploaded_file($_FILES["user_file"]["tmp_name"],
                         $uploaddir."/" . $_FILES["user_file"]["name"]);
                         $logs = fopen('logs/access.log', 'a+');
                         fwrite($logs, $_SESSION['username'].' just uploaded a file called '.$_FILES['user_file']['name']."\n");
+                        fclose($logs);
                 }
             }
         }
