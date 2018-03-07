@@ -11,7 +11,7 @@
 </form>
 
 {% for files in files %}
-<p>{{ files }}</p>
+<p><img src="{{ uploaddir }}/{{ files }}" width="auto" height="100px"></p>
 {% endfor %}
 <a href="?action=home">Go back to homepage</a>
 {% endblock %}

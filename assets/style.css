@@ -25,13 +25,22 @@ small
     color: purple;
 }
 
+.nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+}
+
 .header {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #1B3B6F;
     height: 75px;
-    color: #9EB3C2;
+    color: #dff2d8;
+    font-size: x-large;
 }
 
 .input_file {

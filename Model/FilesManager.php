@@ -4,9 +4,10 @@ class FilesManager
 {
     public function uploadFile()
     {
+        $uploaddir = 'upload/' . $_SESSION['username'];
+
         if (isset($_FILES['user_file']))
         {
-            $uploaddir = 'upload/' . $_SESSION['username'];
             if (file_exists("upload/" . $_FILES["user_file"]["name"]))
                 echo $_FILES["user_file"]["name"] . " already exists. ";
             else

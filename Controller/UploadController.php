@@ -11,7 +11,8 @@ class UploadController extends BaseController
         $manager = new FilesManager();
         $sendUserFiles = $manager->uploadFile();
         $arr = [
-            'files' => $sendUserFiles
+            'files' => $sendUserFiles,
+            'uploaddir' => 'upload/'.$_SESSION['username']
         ];
         return $this->render('upload.html.twig', $arr);
     }
