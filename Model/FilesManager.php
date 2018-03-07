@@ -4,13 +4,13 @@ class FilesManager
 {
     public function uploadFile()
     {
+        $uploaddir = 'upload/' . $_SESSION['username'];
         if (isset($_FILES['user_file']))
         {
-            $uploaddir = 'upload/' . $_SESSION['username'];
-            if (file_exists("upload/" . $_FILES["user_file"]["name"])){
+            if (file_exists($uploaddir.'/'.$_FILES["user_file"]["name"])){
                 echo $_FILES["user_file"]["name"] . " already exists. ";
                 $logs = fopen('logs/error.log', 'a+');
-                fwrite($logs, $_SESSION['username']." tried to upload a file but it already exists\n");
+                fwrite($logs, $_SESSION['username']." tried to upload ".$_FILES["user_file"]["name"]." but it already exists\n");
                 fclose($logs);
             } else {
                 echo $_FILES["user_file"]["name"] . " has been uploaded. <br>";
