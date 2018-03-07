@@ -16,9 +16,13 @@ class FilesManager
                     mkdir($uploaddir, 0777, true);
                     move_uploaded_file($_FILES["user_file"]["tmp_name"],
                         $uploaddir."/". $_FILES["user_file"]["name"]);
+                        $logs = fopen('logs/access.log', 'a+');
+                        fwrite($logs, 'A new directory has been created by '.$_SESSION['username'].' and he uploaded a file named '.$_FILES['user_file']['name']."\n");
                 } else {
                     move_uploaded_file($_FILES["user_file"]["tmp_name"],
-                        "upload/" . $_SESSION['username'] ."/" . $_FILES["user_file"]["name"]);
+                        $uploaddir."/" . $_FILES["user_file"]["name"]);
+                        $logs = fopen('logs/access.log', 'a+');
+                        fwrite($logs, $_SESSION['username'].' just uploaded a file called '.$_FILES['user_file']['name']."\n");
                 }
             }
         }

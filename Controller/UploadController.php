@@ -8,11 +8,13 @@ class UploadController extends BaseController
 {
     public function uploadAction()
     {
-        $manager = new FilesManager();
-        $sendUserFiles = $manager->uploadFile();
-        $arr = [
-            'files' => $sendUserFiles
-        ];
-        return $this->render('upload.html.twig', $arr);
+        if(isset($_SESSION['username'])){
+            $manager = new FilesManager();
+            $sendUserFiles = $manager->uploadFile();
+            $arr = [
+                'files' => $sendUserFiles
+            ];
+            return $this->render('upload.html.twig', $arr);
+        }
     }
 }
