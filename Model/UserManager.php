@@ -7,7 +7,7 @@ class UserManager
     public function registerUser($user, $firstName, $lastName, $email, $password, $passwordVerify)
     {
         if($password === $passwordVerify){
-            $hashedPwd = hash(md5, $password);
+            $hashedPwd = password_hash($password, PASSWORD_BCRYPT);
             $dbm = DBManager::getInstance();
             $pdo = $dbm->getPdo();
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -26,7 +26,7 @@ class UserManager
 
     public function loginUser($user, $password)
     {
-        $hashedPwd = hash(md5, $password);
+        $hashedPwd = password_hash($password, PASSWORD_BCRYPT);
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
 
