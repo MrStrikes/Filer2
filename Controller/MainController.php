@@ -7,7 +7,10 @@ class MainController extends BaseController
 {
     public function homeAction()
     {
-        return $this->render('home.html.twig');
+        $arr = [
+            'user' => $_SESSION
+        ];
+        return $this->render('home.html.twig', $arr);
     }
 
     public function registerAction()
@@ -25,7 +28,8 @@ class MainController extends BaseController
             $manager = new UserManager();
             $sendUserDatas = $manager->registerUser($username, $firstName, $lastName, $email, $password, $passwordVerify);
         }
-        return $this->render('register.html.twig');
+        $this->render('register.html.twig');
+        return $this->redirect('?action=login');
     }
 
     public function loginAction()
@@ -38,8 +42,9 @@ class MainController extends BaseController
             $manager = new UserManager();
             $getUserData = $manager->loginUser($username, $password);
             $arr = [
-                'user' => $_SESSION['username']
+                'user' => $_SESSION
             ];
+            $this->redirect('?action=home');
             return $this->render('login.html.twig', $arr);
         } else {
             $arr = [

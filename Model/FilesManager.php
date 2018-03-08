@@ -24,7 +24,9 @@ class FilesManager
                 } else {
                     move_uploaded_file($_FILES["user_file"]["tmp_name"],
                         $uploaddir."/" . $_FILES["user_file"]["name"]);
-                        $this->getLog('logs/access.log', $_SESSION['username'].' just uploaded a file called '.$_FILES['user_file']['name']."\n");
+                        $logs = fopen('logs/access.log', 'a+');
+                        fwrite($logs, $_SESSION['username'].' just uploaded a file called '.$_FILES['user_file']['name']."\n");
+                        fclose($logs);
                 }
             }
         }

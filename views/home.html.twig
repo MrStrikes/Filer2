@@ -1,4 +1,5 @@
 {% extends 'layout.html.twig' %}
+{% use 'header.html.twig' %}
 
 {% block page_title %}Filer Project{% endblock %}
 
@@ -6,8 +7,11 @@
 
 {% block content %}
 <h1 class="nav">
-  <small>Work In Progress</small><br>
-  <a href="?action=register">Register on the filer project</a><br>
-  <a href="?action=login">Login onto the filer project</a><br>
-  <a href="?action=upload">Upload your files</a>
+    <small>Work In Progress</small><br>
+    {% if user['username'] is defined %}
+        <a href="?action=upload">Upload your files</a>
+    {% else %}
+        <a href="?action=register">Register on the filer project</a><br>
+        <a href="?action=login">Login onto the filer project</a><br>
+    {% endif %}
 {% endblock %}
