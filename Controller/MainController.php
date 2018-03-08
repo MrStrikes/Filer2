@@ -27,9 +27,9 @@ class MainController extends BaseController
             $passwordVerify = $_POST['passwordVerify'];
             $manager = new UserManager();
             $sendUserDatas = $manager->registerUser($username, $firstName, $lastName, $email, $password, $passwordVerify);
+            $this->redirect('?action=login');
         }
-        $this->render('register.html.twig');
-        return $this->redirect('?action=login');
+        return $this->render('register.html.twig');
     }
 
     public function loginAction()
