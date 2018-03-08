@@ -13,6 +13,10 @@
 
 {% for files in files %}
 <p><img src="{{ uploaddir }}/{{ files }}" width="auto" height="100px"></p>
+    <form  method="POST" action="?action=upload">
+        <input type="submit" name="remove" value="Delete">
+        <input type="hidden" value="{{ files }}" name="hiddenFile">
+    </form>
 {% endfor %}
 <a href="?action=home">Go back to homepage</a>
 {% endblock %}

@@ -33,4 +33,10 @@ class FilesManager
         $results = array_diff(scandir($uploaddir), array(".", "..",));
         return $results;
     }
+
+    public function removeFile($file)
+    {
+        $uploaddir = 'upload/' . $_SESSION['username'] . '/';
+        unlink("$uploaddir"."$file");
+    }
 }
