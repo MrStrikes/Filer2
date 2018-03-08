@@ -21,4 +21,11 @@ class BaseController
     {
         $this->redirect('?action='.$route);
     }
+
+    protected function getLog($fileRoute, $log)
+    {
+        fopen($fileRoute, 'a+');
+        fwrite($fileRoute, $log);
+        fclose($fileRoute);
+    }
 }

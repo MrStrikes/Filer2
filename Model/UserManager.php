@@ -26,18 +26,17 @@ class UserManager
 
     public function loginUser($user, $password)
     {
-        $hashedPwd = password_hash($password, PASSWORD_BCRYPT);
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
 
         $stmt = $pdo->prepare("SELECT * FROM Users 
-        WHERE username = :username AND password = :pwd");
+        WHERE username = :username");
         $stmt->bindParam(':username', $user);
-        $stmt->bindParam(':pwd', $hashedPwd);
 
         $stmt->execute();
-        $result = $stmt->fetchAll();
-        if (count($result) < 1 || count($result) >1){
+        $result = $stmt->fetch();
+        var_dump($result);
+        if(!password_verify($password, $result['password'])){
             $errors = 'Invalid username or password';
             return $errors;
         } else {
