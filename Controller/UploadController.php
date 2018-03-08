@@ -12,6 +12,9 @@ class UploadController extends BaseController
             $file = $_POST['hiddenFile'];
             $manager = new FilesManager();
             $manager->removeFile($file);
+            $logs = fopen('logs/access.log', 'a+');
+            fwrite($logs, $_SESSION['username'].' just deleted the file '.$file."\n");
+            fclose($logs);
             return $this->redirect('?action=upload');
 
         } else {
