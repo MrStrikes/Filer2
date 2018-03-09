@@ -17,6 +17,11 @@
         <input type="submit" name="remove" value="Delete">
         <input type="hidden" value="{{ files }}" name="hiddenFile">
     </form>
+    <form  method="POST" action="?action=upload">
+        <input type="submit" name="download" value="Download">
+        <input type="hidden" value="{{ files }}" name="hiddenDownloadFile">
+    </form>
+    <hr>
 {% endfor %}
 <a href="?action=home">Go back to homepage</a>
 {% endblock %}
