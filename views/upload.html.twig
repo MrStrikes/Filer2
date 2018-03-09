@@ -8,13 +8,17 @@
 {% block content %}
 <form  method="POST" enctype="multipart/form-data" action="?action=upload">
     <input type="file" placeholder="upload your file" name="user_file"><br>
-    <button type="submit" name="submit">Upload files</button>
+    <button type="submit" name="upload">Upload files</button>
 </form>
 
 {% for files in files %}
-<p><img src="{{ uploaddir }}/{{ files }}" width="auto" height="100px"></p>
-    <form  method="POST" action="?action=upload">
+<p>{{ files }}</p>
+    <form method="POST" action="?action=upload">
         <input type="submit" name="remove" value="Delete">
+        <input type="hidden" value="{{ files }}" name="hiddenFile">
+    </form>
+    <form method="POST" action="?action=rename">
+        <input type="submit" name="rename" value="Rename">
         <input type="hidden" value="{{ files }}" name="hiddenFile">
     </form>
 {% endfor %}

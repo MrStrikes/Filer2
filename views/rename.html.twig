@@ -1,0 +1,11 @@
+{% use 'header.html.twig' %}
+
+{% block page_title %}Filer Project -- Rename{% endblock %}
+
+{% block header_title %} Rename {% endblock %}
+<form  method="POST" action="?action=rename">
+    <input type="text" name="newName">
+    <input type="hidden" value="{{ oldName }}" name="oldName">
+    <input type="submit" name="renaming">
+</form>
+<a href="?action=home">Go back to homepage</a>

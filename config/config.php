@@ -14,6 +14,7 @@ $config = [
         'register' => 'Main:register',
         'login' => 'Main:login',
         'logout' => 'Main:logout',
-        'upload' => 'Upload:upload'
+        'upload' => 'Upload:upload',
+        'rename' => 'Upload:rename'
     ]
 ];

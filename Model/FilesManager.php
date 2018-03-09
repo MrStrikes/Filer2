@@ -39,4 +39,12 @@ class FilesManager
         $uploaddir = 'upload/' . $_SESSION['username'] . '/';
         unlink("$uploaddir"."$file");
     }
+
+    public function renameFile($oldFilename, $newFilename)
+    {
+        $uploaddir = 'upload/' . $_SESSION['username'] . '/';
+        $oldPath = $uploaddir.$oldFilename;
+        $newPath = $uploaddir.$newFilename;
+        rename($oldPath, $newPath);
+    }
 }
