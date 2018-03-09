@@ -47,4 +47,18 @@ class FilesManager
         $newPath = $uploaddir.$newFilename;
         rename($oldPath, $newPath);
     }
+    
+    public function downloadFile($file)
+    {
+        $uploaddir = 'upload/' . $_SESSION['username'] . '/';
+            $userFile = $uploaddir . $file;
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($userFile) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($userFile));
+            readfile($userFile);
+    }
 }

@@ -16,7 +16,16 @@ class UploadController extends BaseController
             fwrite($logs, $_SESSION['username'].' just deleted the file '.$file."\n");
             fclose($logs);
             return $this->redirect('?action=upload');
+        } else if (isset($_POST['download'])) {
+            $file = $_POST['hiddenDownloadFile'];
+            $manager = new FilesManager();
+            $manager->downloadFile($file);
+            $logs = fopen('logs/access.log', 'a+');
+            fwrite($logs, $_SESSION['username'].' just downloaded the file '.$file."\n");
+            fclose($logs);
+            return $this->redirect('?action=upload');
         } else {
+            $manager = new FilesManager();
             $sendUserFiles = $manager->uploadFile();
             $arr = [
                 'files' => $sendUserFiles,
