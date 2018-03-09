@@ -41,11 +41,18 @@ class MainController extends BaseController
             $password = $_POST['psw'];
             $manager = new UserManager();
             $getUserData = $manager->loginUser($username, $password);
-            $arr = [
-                'user' => $_SESSION
-            ];
-            $this->redirect('?action=home');
-            return $this->render('login.html.twig', $arr);
+            if ($getUserData === "Invalid username or password"){
+                $arr = [
+                    'errors' => $getUserData
+                ];
+                return $this->render('login.html.twig', $arr);
+            } else {
+                $arr = [
+                    'user' => $_SESSION
+                ];
+                $this->redirect('?action=home');
+                return $this->render('login.html.twig', $arr);
+            }
         } else {
             $arr = [
                 'errors' => $getUserData
