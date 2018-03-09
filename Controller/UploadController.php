@@ -48,6 +48,9 @@ class UploadController extends BaseController
                 'oldName' => $hiddenName
             ];
             $manager->renameFile($oldName, $newName);
+            $logs = fopen('logs/access.log', 'a+');
+            fwrite($logs, $_SESSION['username'].' just renamed the file: \"' .$oldName.  '\" into: \"'.$newName."\" \n");
+            fclose($logs);
             return $this->render('rename.html.twig', $arr);
         }
         $hiddenName = $_POST['hiddenFile'];
