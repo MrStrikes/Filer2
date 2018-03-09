@@ -37,26 +37,17 @@ class UploadController extends BaseController
 
     public function renameAction()
     {
-        $_POST['newName'] = '';
-        $_POST['newName'] = '';
-        if(isset($_POST['newName']) && isset($_POST['oldName']) && isset($_POST['hiddenFile'])) {
-            $hiddenName = $_POST['hiddenFile'];
+        if(isset($_POST['oldName']) && isset($_POST['newName'])){
             $oldName = $_POST['oldName'];
             $newName = $_POST['newName'];
             $manager = new FilesManager();
-            $arr = [
-                'oldName' => $hiddenName
-            ];
             $manager->renameFile($oldName, $newName);
-            $logs = fopen('logs/access.log', 'a+');
-            fwrite($logs, $_SESSION['username'].' just renamed the file: \"' .$oldName.  '\" into: \"'.$newName."\" \n");
-            fclose($logs);
+            return $this->render('rename.html.twig');
+        } else {
+            $arr = [
+                'oldName' => $_POST['hiddenFile']
+            ];
             return $this->render('rename.html.twig', $arr);
         }
-        $hiddenName = $_POST['hiddenFile'];
-        $arr = [
-            'oldName' => $hiddenName
-        ];
-        return $this->render('rename.html.twig', $arr);
     }
 }
