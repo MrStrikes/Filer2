@@ -8,9 +8,9 @@ class UploadController extends BaseController
 {
     public function uploadAction()
     {
-    if(empty($_SESSION['username'])){
-        return $this->redirect('?action=home');
-    } else {
+        if(empty($_SESSION['username'])){
+            return $this->redirect('?action=home');
+        } else {
             $manager = new FilesManager();
             if (isset($_POST['remove'])) {
                 $file = $_POST['hiddenFile'];
