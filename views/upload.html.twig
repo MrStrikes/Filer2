@@ -9,6 +9,7 @@
 <form  method="POST" enctype="multipart/form-data" action="?action=upload">
     <input type="file" placeholder="upload your file" name="user_file"><br>
     <button type="submit" name="upload">Upload files</button>
+    <input type="text" name="rename-upload">
 </form>
 
 {% for files in files %}
