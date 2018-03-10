@@ -40,6 +40,7 @@ class UserManager
             return $errors;
         } else {
             $_SESSION['username'] = $user;
+            mkdir('upload/' . $_SESSION['username'], 0777, true);
             return $user;
         }
     }

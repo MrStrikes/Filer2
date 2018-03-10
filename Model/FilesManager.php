@@ -9,7 +9,7 @@ class FilesManager
         {
             if (file_exists($uploaddir.'/'.$_FILES["user_file"]["name"])){
                 echo $_FILES["user_file"]["name"] . " already exists. ";
-                $logs = fopen('logs/error.log', 'a+');
+                $logs = fopen('logs/security.log', 'a+');
                 fwrite($logs, $_SESSION['username']." tried to upload ".$_FILES["user_file"]["name"]." but it already exists\n");
                 fclose($logs);
             } else {
