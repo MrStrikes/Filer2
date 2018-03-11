@@ -3,7 +3,7 @@
 $config = [
     'homepage_route' => 'home',
     'db' => [
-        'name'     => 'filer2',
+        'name'     => 'filer',
         'user'     => 'root',
         'password' => 'root',
         'host'     => '127.0.0.1',
@@ -16,6 +16,7 @@ $config = [
         'logout' => 'Main:logout',
         'upload' => 'Upload:upload',
         'rename' => 'Upload:rename',
-        'edit' => 'Upload:edit'
+        'edit' => 'Upload:edit',
+        'folder' => 'Upload:folder'
     ]
 ];

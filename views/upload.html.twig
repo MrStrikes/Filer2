@@ -8,20 +8,33 @@
 {% block content %}
     <form  method="POST" enctype="multipart/form-data" action="?action=upload">
         <input type="file" placeholder="upload your file" name="user_file"><br>
-        <button type="submit" name="upload">Upload files</button>
+        <button type="submit" name="upload" class="upload_btn">Upload file</button>
     </form>
-    <form  method="POST" action="?action=upload">
+    <form  method="POST" action="?action=upload" class="create_dir_form">
         <label for="directory"></label>
-        <input type="text" name="dir_name" id="directory"><br>
+        <input type="text" name="dir_name" id="directory" placeholder="Directory name"><br>
         <button type="submit" name="create_dir">Create directory</button>
     </form>
+    <br>
+    <form  method="POST" action="?action=folder" class="see_dir_form">
+        <select name="display_folder" id="display_dir_select">
+            {% for dir in dir %}
+                <option value="{{ dir }}">{{ dir }}</option>
+            {% else %}
+                <option value="folder">You have no folder</option>
+            {% endfor %}
+        </select>
+        <button type="submit" name="display_dir">See this Folder</button>
+    </form>
 {% for files in files %}
-    <p>{{ files }}</p>
+    <hr>
+    <div class="user_file">
+<p>{{ files }}</p>
     <form method="POST" action="?action=upload">
         <input type="submit" name="remove" value="Delete">
         <input type="hidden" value="{{ files }}" name="hiddenFile">
     </form>
-    <form method="POST" action="?action=rename">
+    <form method="POST" action="?action=rename&name={{ files }}">
         <input type="submit" name="rename" value="Rename">
         <input type="hidden" value="{{ files }}" name="hiddenFile">
     </form>
@@ -29,10 +42,21 @@
         <input type="submit" name="download" value="Download">
         <input type="hidden" value="{{ files }}" name="hiddenDownloadFile">
     </form>
-    <form method="POST" action="?action=edit">
+    <form method="POST" action="?action=edit&name={{ files }}">
         <input type="submit" name="edit" value="edit">
         <input type="hidden" value="{{ files }}" name="editHidden">
     </form>
+    <form  method="POST" action="?action=upload">
+        <select name="directory" id="directory">
+            {% for dir in dir %}
+            <option value="folder">{{ dir }}</option>
+                {% else %}
+                    <option value="folder">...</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Change Folder</button>
+    </form>
+    </div>
     <hr>
 {% endfor %}
 <a href="?action=home">Go back to homepage</a>

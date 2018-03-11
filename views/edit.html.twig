@@ -3,13 +3,14 @@
 
 {% block page_title %}Filer Project -- edition{% endblock %}
 
-{% block header_title %} Edit File - {{ oldName }} {% endblock %}
+{% block header_title %} Edit File - {{ name }} {% endblock %}
 
 {% block content %}
     <form method="POST" action="?action=edit">
-        <textarea name="edit">{{ contents }}</textarea>
-        <input type="submit" name="btn-edit" value="Edit this file">
-        <input type="hidden" name="hiddenOldName" value="{{ oldName }}">
+        <textarea name="edit-file">{{ contents }}</textarea>
+        <input type="submit" name="btnEdit" value="Edit this file">
+        <input type="hidden" name="hiddenName" value="{{ name }}">
+        <input type="hidden" name="hiddenContent" value="{{ contents }}">
     </form>
-    <a href="?action=home">Go back to homepage</a>
+    <a href="?action=upload">Go back to uploaded files</a>
 {% endblock %}

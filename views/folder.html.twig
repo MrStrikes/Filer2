@@ -1,0 +1,39 @@
+{% extends 'layout.html.twig' %}
+{% use 'header.html.twig' %}
+
+{% block page_title %}Filer Project{% endblock %}
+
+{% block header_title %} Folder : "{{ folder }}" {% endblock %}
+
+{% block content %}
+    {% for files in files %}
+        <hr>
+        <div class="user_file">
+            <p>{{ files }}</p>
+            <form method="POST" action="?action=upload">
+                <input type="submit" name="remove" value="Delete">
+                <input type="hidden" value="{{ files }}" name="hiddenFile">
+            </form>
+            <form method="POST" action="?action=rename">
+                <input type="submit" name="rename" value="Rename">
+                <input type="hidden" value="{{ files }}" name="hiddenFile">
+            </form>
+            <form  method="POST" action="?action=upload">
+                <input type="submit" name="download" value="Download">
+                <input type="hidden" value="{{ files }}" name="hiddenDownloadFile">
+            </form>
+            <form  method="POST" action="?action=upload">
+                <select name="directory" id="directory">
+                    {% for dir in dir %}
+                        <option value="folder">{{ dir }}</option>
+                    {% else %}
+                        <option value="folder">Marche Pas</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Change Folder</button>
+            </form>
+        </div>
+        <hr>
+    {% endfor %}
+    <a href="?action=upload">Go back to upload file</a>
+{% endblock %}

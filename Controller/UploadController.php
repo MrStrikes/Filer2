@@ -10,39 +10,44 @@ class UploadController extends BaseController
     {
         if(empty($_SESSION['username'])){
             return $this->redirect('?action=home');
-        } else {
-            $manager = new FilesManager();
-            if (isset($_POST['remove'])) {
-                $file = $_POST['hiddenFile'];
-                    $manager->isDirectory($file);
-                    return $this->redirect('?action=upload');
-            } else if (isset($_POST['download'])) {
-                $file = $_POST['hiddenDownloadFile'];
-                $manager = new FilesManager();
-                $manager->downloadFile($file);
-                $logs = fopen('logs/access.log', 'a+');
-                fwrite($logs, $_SESSION['username'].' just downloaded the file '.$file."\n");
-                fclose($logs);
+        } else { $manager = new FilesManager();
+        if (isset($_POST['remove'])) {
+            $file = $_POST['hiddenFile'];
+                $manager->isDirectory($file);
                 return $this->redirect('?action=upload');
-            } else if (isset($_POST['create_dir'])) {// DO A <select> TO CHOSE WHAT DIR YOU CHOSE AND DISPLAY FILES IN THIS DIR
-                if (isset($_POST['dir_name'])) {
-                    $dirname = $_POST['dir_name'];
-                    $manager = new FilesManager();
-                    $manager->createDir($dirname);
-                    $logs = fopen('logs/access.log', 'a+');
-                    fwrite($logs, $_SESSION['username'].' just created the directory: '.$dirname."\n");
-                    fclose($logs);
-                    return $this->redirect('?action=upload');
-                }
-            } else {
+        } else if (isset($_POST['download'])) {
+            $file = $_POST['hiddenDownloadFile'];
+            $manager = new FilesManager();
+            $manager->downloadFile($file);
+            $logs = fopen('logs/access.log', 'a+');
+            fwrite($logs, $_SESSION['username'].' just downloaded the file '.$file."\n");
+            fclose($logs);
+            return $this->redirect('?action=upload');
+        } else if (isset($_POST['create_dir'])) {
+            if (isset($_POST['dir_name'])) {
+                $dirname = str_replace('/', '', $_POST['dir_name']);
                 $manager = new FilesManager();
+                $manager->createDir($dirname);
                 $sendUserFiles = $manager->uploadFile();
+                $userDirectory = $manager->userDir($sendUserFiles);
                 $arr = [
                     'files' => $sendUserFiles,
-                    'uploaddir' => 'upload/'.$_SESSION['username']
+                    'dir' => $userDirectory
                 ];
                 return $this->render('upload.html.twig', $arr);
             }
+        } else {
+            $manager = new FilesManager();
+            $sendUserFiles = $manager->uploadFile();
+            $userDirectory = $manager->userDir($sendUserFiles);
+
+            $arr = [
+                'files' => $sendUserFiles,
+                'uploaddir' => 'upload/'.$_SESSION['username'],
+                'dir' => $userDirectory
+            ];
+            return $this->render('upload.html.twig', $arr);
+        }
         }
     }
 
@@ -53,7 +58,7 @@ class UploadController extends BaseController
         } else {
             if(isset($_POST['oldName']) && isset($_POST['newName'])){
                 $oldName = $_POST['oldName'];
-                $newName = $_POST['newName'];
+                $newName = str_replace('/', '', $_POST['newName']);
                 $manager = new FilesManager();
                 $manager->renameFile($oldName, $newName);
                 $logs = fopen('logs/access.log', 'a+');
@@ -70,16 +75,32 @@ class UploadController extends BaseController
     }
 
     public function editAction(){
-        if(isset($_POST['edit'])){
-            $hiddenFile = $_POST['editHidden'];
+        $hiddenFile = $_POST['editHidden'];
+        $manager = new FilesManager();
+        $datas = $manager->editFile($hiddenFile, $_POST['edit-file']);
+        $arr = [
+            'contents' => $datas,
+            'name' => $hiddenFile
+        ];
+        return $this->render('edit.html.twig', $arr);
+    }
+
+    public function folderAction()
+    {
+        if (isset($_POST['display_dir'])) {
+            $folder = $_POST['display_folder'];
             $manager = new FilesManager();
-            $editContent = $_POST['edit'];
-            $datas = $manager->editFile($hiddenFile, $editContent);
+            $sendUserFiles = $manager-> displayFolderContent($folder);
             $arr = [
-                'contents' => $datas,
-                'oldName' => $hiddenFile
+                'folder' => $folder,
+                'files' => $sendUserFiles
             ];
-            return $this->render('edit.html.twig', $arr);
+            return $this->render('folder.html.twig', $arr);
+            } else {
+            $arr = [
+                'folder' => $_POST['display_folder']
+            ];
+            return $this->render('folder.html.twig', $arr);
         }
     }
 }

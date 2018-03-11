@@ -81,7 +81,19 @@ class FilesManager
     public function createDir($dirname)
     {
         $uploaddir = 'upload/' . $_SESSION['username'] . '/';
-        mkdir($uploaddir . $dirname . '/', 0777, true);
+        $userDir =$uploaddir . $dirname . '/';
+        if (!file_exists($userDir)) {
+            mkdir($userDir, 0777, true);
+            $logs = fopen('logs/access.log', 'a+');
+            fwrite($logs, $_SESSION['username'].' just created the directory: '.$dirname."\n");
+            fclose($logs);
+        } else {
+            echo $dirname . " already exists. ";
+            $logs = fopen('logs/security.log', 'a+');
+            fwrite($logs, $_SESSION['username']." tried to create the directory: ".$dirname." but it already exists\n");
+            fclose($logs);
+        }
+        return $userDir;
     }
 
     private function deleteDir($userDir)
@@ -102,14 +114,39 @@ class FilesManager
         rmdir($dirPath);
     }
 
-    public function editFile($file, $newContent){
+    public function editFile($file, $content)
+    {
         $fileInfo = pathinfo($file);
         $uploaddir = 'upload/' . $_SESSION['username'] . '/';
         if($fileInfo['extension'] === 'txt'){
             $datas = file_get_contents($uploaddir.$file);
-            $newContents = $_POST[$newContent];
-            file_put_contents($uploaddir.$file, $newContents);
+            if(isset($_POST['btnEdit'])){
+                return file_put_contents($uploaddir.$file, $content);
+            }
             return $datas;
+        } else {
+            $errors = 'This is not the good file extension';
+            return $errors;
         }
+    }
+
+    public function userDir($userdir)
+    {
+        $array = [];
+        foreach ($userdir as $dir) {
+            $dirPath = 'upload/' . $_SESSION['username'] . '/' . $dir .'/';
+            if (is_dir($dirPath)) {
+                array_push($array, $dir);
+            }
+        }
+        return $array;
+    }
+
+    public function displayFolderContent($dir)
+    {
+        $uploaddir = 'upload/' . $_SESSION['username'];
+        $userdir = $uploaddir . '/' . $dir;
+        $results = array_diff(scandir($userdir), array(".", "..",));
+        return $results;
     }
 }

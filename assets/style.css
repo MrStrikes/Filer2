@@ -60,3 +60,35 @@ textarea{
     height: 80vh;
     width: 99vw;
 }
+
+.upload_btn {
+    width: 50%;
+    border-radius: 20px;
+}
+
+.user_file {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.create_dir_form {
+    display: inline-flex;
+}
+
+p {
+    width: 200px;
+    height: 50px;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.see_dir_form {
+    display: inline-flex;
+}
+
+#display_dir_select {
+    width: 161px;
+}
