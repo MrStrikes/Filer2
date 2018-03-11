@@ -134,4 +134,12 @@ class FilesManager
         $results = array_diff(scandir($userdir), array(".", "..",));
         return $results;
     }
+
+    public function changeDir($oldFilePath, $newFilePath, $file)
+    {
+        rename($oldFilePath.'/'.$file,$newFilePath.'/'.$file);
+        $logs = fopen('logs/access.log', 'a+');
+        fwrite($logs, $_SESSION['username'].' just move the file: '.$file.' from: '.$oldFilePath.' to: '.$newFilePath."\n");
+        fclose($logs);
+    }
 }

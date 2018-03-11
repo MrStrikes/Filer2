@@ -36,6 +36,14 @@ if(empty($_SESSION['username'])){
                 ];
                 return $this->render('upload.html.twig', $arr);
             }
+        } else if (isset($_POST['change_folder'])) {
+            $file = $_POST['hiddenChangeFile'];
+            $folder = $_POST['directory'];
+            $oldFilePath = 'upload/' . $_SESSION['username'];
+            $newFilePath = $oldFilePath.'/'.$folder;
+            $manager = new FilesManager();
+            $manager->changeDir($oldFilePath, $newFilePath, $file);
+            return $this->redirect('?action=upload');
         } else {
             $manager = new FilesManager();
             $sendUserFiles = $manager->uploadFile();
@@ -76,16 +84,20 @@ if(empty($_SESSION['username'])){
 
     public function folderAction()
     {
-        if (isset($_POST['display_dir'])) {
+        if (empty($_SESSION['username'])) {
+            return $this->redirect('?action=home');
+        } else if (isset($_POST['display_dir'])) {
             $folder = $_POST['display_folder'];
             $manager = new FilesManager();
-            $sendUserFiles = $manager-> displayFolderContent($folder);
+            $sendUserFiles = $manager->displayFolderContent($folder);
+            $userDirectory = $manager->userDir($sendUserFiles);
             $arr = [
                 'folder' => $folder,
-                'files' => $sendUserFiles
+                'files' => $sendUserFiles,
+                'dir' => $userDirectory
             ];
             return $this->render('folder.html.twig', $arr);
-            } else {
+        } else {
             $arr = [
                 'folder' => $_POST['display_folder']
             ];
