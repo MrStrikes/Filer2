@@ -8,10 +8,28 @@
 {% block content %}
 <form  method="POST" enctype="multipart/form-data" action="?action=upload">
     <input type="file" placeholder="upload your file" name="user_file"><br>
-    <button type="submit" name="upload">Upload files</button>
+    <button type="submit" name="upload" class="upload_btn">Upload file</button>
 </form>
 
+    <form  method="POST" action="?action=upload" class="create_dir_form">
+        <label for="directory"></label>
+        <input type="text" name="dir_name" id="directory" placeholder="Directory name"><br>
+        <button type="submit" name="create_dir">Create directory</button>
+    </form>
+    <br>
+    <form  method="POST" action="?action=folder" class="see_dir_form">
+        <select name="display_folder" id="display_dir_select">
+            {% for dir in dir %}
+                <option value="{{ dir }}">{{ dir }}</option>
+            {% else %}
+                <option value="folder">You have no folder</option>
+            {% endfor %}
+        </select>
+        <button type="submit" name="display_dir">See this Folder</button>
+    </form>
 {% for files in files %}
+    <hr>
+    <div class="user_file">
 <p>{{ files }}</p>
     <form method="POST" action="?action=upload">
         <input type="submit" name="remove" value="Delete">
@@ -25,6 +43,17 @@
         <input type="submit" name="download" value="Download">
         <input type="hidden" value="{{ files }}" name="hiddenDownloadFile">
     </form>
+    <form  method="POST" action="?action=upload">
+        <select name="directory" id="directory">
+            {% for dir in dir %}
+            <option value="folder">{{ dir }}</option>
+                {% else %}
+                    <option value="folder">Marche Pas</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Change Folder</button>
+    </form>
+    </div>
     <hr>
 {% endfor %}
 <a href="?action=home">Go back to homepage</a>

@@ -34,7 +34,23 @@ class FilesManager
         return $results;
     }
 
-    public function removeFile($file)
+    public function isDirectory($file)
+    {
+        $uploaddir = 'upload/' . $_SESSION['username'] . '/';
+        if (!is_dir($uploaddir . $file)) {
+            $logs = fopen('logs/access.log', 'a+');
+            fwrite($logs, $_SESSION['username'].' just deleted the file '.$file."\n");
+            fclose($logs);
+            return $this->removeFile($file);
+        } else {
+            $logs = fopen('logs/access.log', 'a+');
+            fwrite($logs, $_SESSION['username'].' just deleted the directory '.$file."\n");
+            fclose($logs);
+            return $this->deleteDir($file);
+        }
+    }
+
+    private function removeFile($file)
     {
         $uploaddir = 'upload/' . $_SESSION['username'] . '/';
         unlink("$uploaddir"."$file");
@@ -60,5 +76,62 @@ class FilesManager
             header('Pragma: public');
             header('Content-Length: ' . filesize($userFile));
             readfile($userFile);
+    }
+
+    public function createDir($dirname)
+    {
+        $uploaddir = 'upload/' . $_SESSION['username'] . '/';
+        $userDir =$uploaddir . $dirname . '/';
+        if (!file_exists($userDir)) {
+            mkdir($userDir, 0777, true);
+            $logs = fopen('logs/access.log', 'a+');
+            fwrite($logs, $_SESSION['username'].' just created the directory: '.$dirname."\n");
+            fclose($logs);
+        } else {
+            echo $dirname . " already exists. ";
+            $logs = fopen('logs/security.log', 'a+');
+            fwrite($logs, $_SESSION['username']." tried to create the directory: ".$dirname." but it already exists\n");
+            fclose($logs);
+        }
+        return $userDir;
+    }
+
+    private function deleteDir($userDir)
+    {
+        $dirPath = 'upload/' . $_SESSION['username'] . '/' . $userDir .'/';
+
+            if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
+                $dirPath .= '/';
+            }
+            $files = glob($dirPath . '*', GLOB_MARK);
+            foreach ($files as $file) {
+                if (is_dir($file)) {
+                    self::deleteDir($file);
+                } else {
+                    unlink($file);
+                }
+            }
+            rmdir($dirPath);
+
+    }
+
+    public function userDir($userdir)
+    {
+        $array = [];
+        foreach ($userdir as $dir) {
+            $dirPath = 'upload/' . $_SESSION['username'] . '/' . $dir .'/';
+            if (is_dir($dirPath)) {
+                array_push($array, $dir);
+            }
+        }
+        return $array;
+    }
+
+    public function displayFolderContent($dir)
+    {
+        $uploaddir = 'upload/' . $_SESSION['username'];
+        $userdir = $uploaddir . '/' . $dir;
+        $results = array_diff(scandir($userdir), array(".", "..",));
+        return $results;
     }
 }
