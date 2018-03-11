@@ -149,4 +149,32 @@ class FilesManager
         $results = array_diff(scandir($userdir), array(".", "..",));
         return $results;
     }
+
+    public function userDir($userdir)
+    {
+        $array = [];
+        foreach ($userdir as $dir) {
+            $dirPath = 'upload/' . $_SESSION['username'] . '/' . $dir .'/';
+            if (is_dir($dirPath)) {
+                array_push($array, $dir);
+            }
+        }
+        return $array;
+    }
+
+    public function displayFolderContent($dir)
+    {
+        $uploaddir = 'upload/' . $_SESSION['username'];
+        $userdir = $uploaddir . '/' . $dir;
+        $results = array_diff(scandir($userdir), array(".", "..",));
+        return $results;
+    }
+
+    public function changeDir($oldFilePath, $newFilePath, $file)
+    {
+        rename($oldFilePath.'/'.$file,$newFilePath.'/'.$file);
+        $logs = fopen('logs/access.log', 'a+');
+        fwrite($logs, $_SESSION['username'].' just move the file: '.$file.' from: '.$oldFilePath.' to: '.$newFilePath."\n");
+        fclose($logs);
+    }
 }

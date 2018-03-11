@@ -49,12 +49,13 @@
     <form  method="POST" action="?action=upload">
         <select name="directory" id="directory">
             {% for dir in dir %}
-            <option value="folder">{{ dir }}</option>
+            <option value="{{ dir }}">{{ dir }}</option>
                 {% else %}
-                    <option value="folder">...</option>
+                    <option value="folder">Marche Pas</option>
             {% endfor %}
         </select>
-        <button type="submit">Change Folder</button>
+        <input type="submit" name="change_folder" value="Change Folder">
+        <input type="hidden" value="{{ files }}" name="hiddenChangeFile">
     </form>
     </div>
     <hr>

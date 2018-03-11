@@ -10,7 +10,8 @@ class UploadController extends BaseController
     {
         if(empty($_SESSION['username'])){
             return $this->redirect('?action=home');
-        } else { $manager = new FilesManager();
+        } else { 
+            $manager = new FilesManager();
         if (isset($_POST['remove'])) {
             $file = $_POST['hiddenFile'];
                 $manager->isDirectory($file);
@@ -84,19 +85,23 @@ class UploadController extends BaseController
         ];
         return $this->render('edit.html.twig', $arr);
     }
-
+    
     public function folderAction()
     {
-        if (isset($_POST['display_dir'])) {
+        if (empty($_SESSION['username'])) {
+            return $this->redirect('?action=home');
+        } else if (isset($_POST['display_dir'])) {
             $folder = $_POST['display_folder'];
             $manager = new FilesManager();
-            $sendUserFiles = $manager-> displayFolderContent($folder);
+            $sendUserFiles = $manager->displayFolderContent($folder);
+            $userDirectory = $manager->userDir($sendUserFiles);
             $arr = [
                 'folder' => $folder,
-                'files' => $sendUserFiles
+                'files' => $sendUserFiles,
+                'dir' => $userDirectory
             ];
             return $this->render('folder.html.twig', $arr);
-            } else {
+        } else {
             $arr = [
                 'folder' => $_POST['display_folder']
             ];
