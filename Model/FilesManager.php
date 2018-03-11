@@ -17,16 +17,16 @@ class FilesManager
                 if (!file_exists($uploaddir)) {
                     mkdir($uploaddir, 0777, true);
                     move_uploaded_file($_FILES["user_file"]["tmp_name"],
-                        $uploaddir."/". $_FILES["user_file"]["name"]);
-                        $logs = fopen('logs/access.log', 'a+');
-                        fwrite($logs, 'A new directory has been created by '.$_SESSION['username'].' and he uploaded a file named '.$_FILES['user_file']['name']."\n");
-                        fclose($logs);
+                    $uploaddir."/". $_FILES["user_file"]["name"]);
+                    $logs = fopen('logs/access.log', 'a+');
+                    fwrite($logs, 'A new directory has been created by '.$_SESSION['username'].' and he uploaded a file named '.$_FILES['user_file']['name']."\n");
+                    fclose($logs);
                 } else {
                     move_uploaded_file($_FILES["user_file"]["tmp_name"],
-                        $uploaddir."/" . $_FILES["user_file"]["name"]);
-                        $logs = fopen('logs/access.log', 'a+');
-                        fwrite($logs, $_SESSION['username'].' just uploaded a file called '.$_FILES['user_file']['name']."\n");
-                        fclose($logs);
+                    $uploaddir."/" . $_FILES["user_file"]["name"]);
+                    $logs = fopen('logs/access.log', 'a+');
+                    fwrite($logs, $_SESSION['username'].' just uploaded a file called '.$_FILES['user_file']['name']."\n");
+                    fclose($logs);
                 }
             }
         }
@@ -99,7 +99,17 @@ class FilesManager
                     unlink($file);
                 }
             }
-            rmdir($dirPath);
+        rmdir($dirPath);
+    }
 
+    public function editFile($file, $newContent){
+        $fileInfo = pathinfo($file);
+        $uploaddir = 'upload/' . $_SESSION['username'] . '/';
+        if($fileInfo['extension'] === 'txt'){
+            $datas = file_get_contents($uploaddir.$file);
+            $newContents = $_POST[$newContent];
+            file_put_contents($uploaddir.$file, $newContents);
+            return $datas;
+        }
     }
 }

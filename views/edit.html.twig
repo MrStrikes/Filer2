@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+{% use 'header.html.twig' %}
+
+{% block page_title %}Filer Project -- edition{% endblock %}
+
+{% block header_title %} Edit File - {{ oldName }} {% endblock %}
+
+{% block content %}
+    <form method="POST" action="?action=edit">
+        <textarea name="edit">{{ contents }}</textarea>
+        <input type="submit" name="btn-edit" value="Edit this file">
+        <input type="hidden" name="hiddenOldName" value="{{ oldName }}">
+    </form>
+    <a href="?action=home">Go back to homepage</a>
+{% endblock %}

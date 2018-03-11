@@ -6,17 +6,17 @@
 {% block header_title %} UPLOAD {% endblock %}
 
 {% block content %}
-<form  method="POST" enctype="multipart/form-data" action="?action=upload">
-    <input type="file" placeholder="upload your file" name="user_file"><br>
-    <button type="submit" name="upload">Upload files</button>
-</form>
+    <form  method="POST" enctype="multipart/form-data" action="?action=upload">
+        <input type="file" placeholder="upload your file" name="user_file"><br>
+        <button type="submit" name="upload">Upload files</button>
+    </form>
     <form  method="POST" action="?action=upload">
         <label for="directory"></label>
         <input type="text" name="dir_name" id="directory"><br>
         <button type="submit" name="create_dir">Create directory</button>
     </form>
 {% for files in files %}
-<p>{{ files }}</p>
+    <p>{{ files }}</p>
     <form method="POST" action="?action=upload">
         <input type="submit" name="remove" value="Delete">
         <input type="hidden" value="{{ files }}" name="hiddenFile">
@@ -28,6 +28,10 @@
     <form  method="POST" action="?action=upload">
         <input type="submit" name="download" value="Download">
         <input type="hidden" value="{{ files }}" name="hiddenDownloadFile">
+    </form>
+    <form method="POST" action="?action=edit">
+        <input type="submit" name="edit" value="edit">
+        <input type="hidden" value="{{ files }}" name="editHidden">
     </form>
     <hr>
 {% endfor %}

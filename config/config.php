@@ -15,6 +15,7 @@ $config = [
         'login' => 'Main:login',
         'logout' => 'Main:logout',
         'upload' => 'Upload:upload',
-        'rename' => 'Upload:rename'
+        'rename' => 'Upload:rename',
+        'edit' => 'Upload:edit'
     ]
 ];

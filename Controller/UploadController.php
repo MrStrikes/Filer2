@@ -68,4 +68,18 @@ class UploadController extends BaseController
             }
         }
     }
+
+    public function editAction(){
+        if(isset($_POST['edit'])){
+            $hiddenFile = $_POST['editHidden'];
+            $manager = new FilesManager();
+            $editContent = $_POST['edit'];
+            $datas = $manager->editFile($hiddenFile, $editContent);
+            $arr = [
+                'contents' => $datas,
+                'oldName' => $hiddenFile
+            ];
+            return $this->render('edit.html.twig', $arr);
+        }
+    }
 }
