@@ -3,9 +3,9 @@
 $config = [
     'homepage_route' => 'home',
     'db' => [
-        'name'     => 'filer',
-        'user'     => 'root',
-        'password' => 'root',
+        'name'     => 'YOUR_DATABASE_HERE',
+        'user'     => 'YOUR_USERNAME_HERE',
+        'password' => 'YOUR_PASSWORD_HERE',
         'host'     => '127.0.0.1',
         'port'     => 3306
     ],
