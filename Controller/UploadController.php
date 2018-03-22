@@ -8,9 +8,10 @@ class UploadController extends BaseController
 {
     public function uploadAction()
     {
-if(empty($_SESSION['username'])){
-    return $this->redirect('?action=home');
-} else { $manager = new FilesManager();
+        if(empty($_SESSION['username'])){
+            return $this->redirect('?action=home');
+        } else { 
+            $manager = new FilesManager();
         if (isset($_POST['remove'])) {
             $file = $_POST['hiddenFile'];
                 $manager->isDirectory($file);
@@ -25,7 +26,7 @@ if(empty($_SESSION['username'])){
             return $this->redirect('?action=upload');
         } else if (isset($_POST['create_dir'])) {
             if (isset($_POST['dir_name'])) {
-                $dirname = $_POST['dir_name'];
+                $dirname = str_replace('/', '', $_POST['dir_name']);
                 $manager = new FilesManager();
                 $manager->createDir($dirname);
                 $sendUserFiles = $manager->uploadFile();
@@ -66,7 +67,7 @@ if(empty($_SESSION['username'])){
         } else {
             if(isset($_POST['oldName']) && isset($_POST['newName'])){
                 $oldName = $_POST['oldName'];
-                $newName = $_POST['newName'];
+                $newName = str_replace('/', '', $_POST['newName']);
                 $manager = new FilesManager();
                 $manager->renameFile($oldName, $newName);
                 $logs = fopen('logs/access.log', 'a+');
@@ -82,6 +83,17 @@ if(empty($_SESSION['username'])){
         }
     }
 
+    public function editAction(){
+        $hiddenFile = $_POST['editHidden'];
+        $manager = new FilesManager();
+        $datas = $manager->editFile($hiddenFile, $_POST['edit-file']);
+        $arr = [
+            'contents' => $datas,
+            'name' => $hiddenFile
+        ];
+        return $this->render('edit.html.twig', $arr);
+    }
+    
     public function folderAction()
     {
         if (empty($_SESSION['username'])) {

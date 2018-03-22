@@ -56,6 +56,11 @@ input {
     margin-bottom: 5px;
 }
 
+textarea{
+    height: 80vh;
+    width: 99vw;
+}
+
 .upload_btn {
     width: 50%;
     border-radius: 20px;
