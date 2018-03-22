@@ -36,7 +36,7 @@ if(empty($_SESSION['username'])){
                 ];
                 return $this->render('upload.html.twig', $arr);
             }
-        } else if (isset($_POST['change_folder'])) {
+        } else if(isset($_POST['change_folder'])) {
             $file = $_POST['hiddenChangeFile'];
             $folder = $_POST['directory'];
             $oldFilePath = 'upload/' . $_SESSION['username'];
